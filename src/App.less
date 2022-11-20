@@ -1,46 +1,126 @@
-@orange: orange; 
+@primary-color: rgb(218, 224, 228);
+@secondary-color: rgb(245, 246, 247);
+@color-red: rgb(169, 13, 13);
+@color-green: rgb(8, 80, 8);
+@controls-height: 1.5rem;
+@primary-radius: 0.5rem;
+@secondary-radius: 0.2rem;
 
-p {
-    color: @orange;
+.App {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.TodoList {
+  background-color: @primary-color;
+  width: 50%;
+  margin: 1rem auto;
+  border-radius: @primary-radius;
+  padding: 2rem;
+}
+
+.TodoItem {
+  background-color: @secondary-color;
+  min-height: 3rem;
+  margin-bottom: 0.5rem;
+  border-radius: @primary-radius;
+  padding: 0.2rem 1rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.TodoItemContent {
+  width: 80%;
+  display: flex;
+}
+
+.TodoItemContent div {
+  margin-right: 1rem;
+}
+
+.TodoItemDescription {
+  width: 50%;
+}
+
+.TodoEditModal {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  background-color: @primary-color;
+  border-radius: @primary-radius;
+  border: 1px @secondary-color solid;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.5);
+}
+
+.TodoEditBtn {
+  position: relative;
+}
+
+.TodoEditBtn button {
+  position: absolute;
+  right: -0.75rem;
+  top: -0.75rem;
+}
+
+.TodoEditForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.TodoEditForm button {
+  align-self: center;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.expired {
+  color: @color-red
+}
+
+.title {
+  font-weight: bold;
+}
+
+.TodoItemControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button {
+  cursor: pointer;
+  height: @controls-height;
+  width: 3rem;
+  margin: 0.2rem;
+  color: @primary-color;
+  border-radius: @secondary-radius;
+}
+
+button.delete,
+button.close {
+  background-color: @color-red;
+  width: 1.5rem;
+  border-radius: 50%;
+}
+
+button.edit,
+button.add,
+button.save {
+  background-color: @color-green;
 }
 
 
-.App {
-    text-align: center;
-  }
-  
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
+
+.checkbox {
+  width: 1.5rem;
+  height: @controls-height;
+}
