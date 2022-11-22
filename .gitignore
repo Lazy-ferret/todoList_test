@@ -24,3 +24,7 @@ yarn-error.log*
 
 #jsdoc 
 /out
+
+#firebase
+.firebaserc
+/.firebase
