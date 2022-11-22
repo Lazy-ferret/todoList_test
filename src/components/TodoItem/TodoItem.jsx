@@ -45,7 +45,7 @@ const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
                     <div>{description}</div>
                 </div>
                 <div className={`TodoItemEndDate${isExpired ? ' expired' : ''}`}>
-                    {endDate}   
+                    {dayjs(endDate).format("DD.MM.YYYY")}   
                 </div>
                 {attachmentUrl && <div className='TodoItemAttachment'>
                     <a href={attachmentUrl}>attachment</a>
