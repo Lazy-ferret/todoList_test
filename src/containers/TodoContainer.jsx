@@ -3,7 +3,14 @@ import TodoEditModal from '../components/TodoEditModal/TodoEditModal'
 import TodoList from '../components/TodoList/TodoList'
 import { deleteTodoItem, getTodoList, saveTodoItem } from '../service/database'
 
-const TodoContainer = (props) => {
+/**
+ * Component contains all handlers for interaction with DB API. 
+ * Return UI components TodoList and TodoEditModal   
+ *  
+ * @returns TodoList   
+ * @returns TodoEditModal - return if local state isModalOpen is true 
+ */
+const TodoContainer = () => {
   const [todos, setTodos] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingTodo, setEditingTodo] = useState(null)
@@ -23,17 +30,20 @@ const TodoContainer = (props) => {
   }
 
   const handleComplete = async (item) => {
-    item.completed = !item.completed
-    await saveTodoItem(item)
+    await saveTodoItem({ ...item, completed: !item.completed })
     loadTodoList()
   }
 
-  const handleToggleModal = () => {
+  const handleAddClick = () => {
+    setIsModalOpen(!isModalOpen)
+  }
+
+  const handleCloseClick = () => {
     setEditingTodo(null)
     setIsModalOpen(!isModalOpen)
   }
 
-  const handleEditModal = async (item) => {
+  const handleSubmitModal = async (item) => {
     await saveTodoItem(item)
     loadTodoList()
     setEditingTodo(null)
@@ -52,12 +62,12 @@ const TodoContainer = (props) => {
         onDelete={handleDelete}
         onEdit={handleEdit}
         onComplete={handleComplete}
-        onAddClick={handleToggleModal}
+        onAddClick={handleAddClick}
         isModalOpen={isModalOpen}
       />
       {isModalOpen && <TodoEditModal
-        onFormSubmit={handleEditModal}
-        onCloseClick={handleToggleModal}
+        onFormSubmit={handleSubmitModal}
+        onCloseClick={handleCloseClick}
         todo={editingTodo}
       />}
     </>

@@ -1,6 +1,16 @@
 import dayjs from 'dayjs'
 import React, { useMemo } from 'react'
 
+/**
+ * UI component for displaying data for each task  
+ * takes data from TodoList and return markup of todo item
+ * 
+ * @prop {Object} todo - data of todo item 
+ * @prop {function} onDelete - delete todo item handler 
+ * @prop {function} onComplete - todo item property 'completed' handler  
+ * @prop {function} onEdit - submit form handler
+ * @returns TodoItem - UI component for displaying data for each task
+ */
 const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
     const { title, description, endDate, completed, attachment } = todo
 
@@ -42,7 +52,10 @@ const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
                 </div>}
             </div>
             <div className='TodoItemControl'>
-                <input type='checkbox' className='checkbox' checked={completed} onChange={() => handleComplete(todo)} />
+                <input type='checkbox'
+                    className='checkbox'
+                    checked={completed}
+                    onChange={() => handleComplete(todo)} />
                 <button className='button edit' onClick={() => handleEdit(todo)}>edit</button>
                 <button className='button delete' onClick={() => handleDelete(todo)}>x</button>
             </div>

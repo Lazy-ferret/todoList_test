@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { loadFile } from '../../service/database'
 
+/**
+ * Component for rendering a form that creates new tasks 
+ * and edits existing ones
+ * 
+ * @prop {function} onFormSubmit - submit form handler 
+ * @prop {function} onCloseClick - close button handler 
+ * @prop {Object} todo - data of editing TodoItem
+ * @returns - form for creating and editing tasks
+ */
+
 const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
     const [value, setValue] = useState({
         id: undefined,

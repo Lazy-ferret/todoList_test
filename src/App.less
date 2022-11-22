@@ -1,7 +1,7 @@
 @primary-color: rgb(250, 250, 250);
-@secondary-color: rgb(245, 246, 247);
+@secondary-color: rgb(232, 235, 238);
 @color-red: rgb(169, 13, 13);
-@color-blue: #1677ff;
+@color-blue: #4096ff;
 @controls-height: 1.5rem;
 @primary-radius: 0.5rem;
 @secondary-radius: 0.2rem;
@@ -74,6 +74,7 @@
 .TodoEditForm {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 
 .TodoEditForm button {
@@ -112,7 +113,10 @@
 button.delete,
 button.close {
   .styled-button;
-  background-color: @color-red;
+  background-color: @primary-color;
+  color: @color-red;
+  font-weight: bold;
+  border: 1px @secondary-color solid;
   width: 1.5rem;
   border-radius: 50%;
 }
