@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { loadFile } from '../../service/database'
 
 const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
     const [value, setValue] = useState({
-        id: Number(Date.now()),
+        id: undefined,
         title: '',
         description: '',
         endDate: '',
@@ -25,12 +26,14 @@ const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
         setValue(newTodo)
     }
 
-    const handleAttachmentChange = (e) => {
-        const newTodo = { ...value, attachment: e.target.files[0] }
+    const handleAttachmentChange = async (e) => {
+        const fileUrl = await loadFile(e.target.files[0])
+        const newTodo = { ...value, attachment: fileUrl }
         setValue(newTodo)
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         onFormSubmit(value)
     }
 
@@ -66,8 +69,7 @@ const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
                 <input type="file"
                     name='attachment'
                     onChange={handleAttachmentChange}
-                    ref={fileRef}
-                />
+                    ref={fileRef} />
 
                 <button type='submit' className='save'>save</button>
             </form>

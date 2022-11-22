@@ -1,7 +1,7 @@
-@primary-color: rgb(218, 224, 228);
+@primary-color: rgb(250, 250, 250);
 @secondary-color: rgb(245, 246, 247);
 @color-red: rgb(169, 13, 13);
-@color-green: rgb(8, 80, 8);
+@color-blue: #1677ff;
 @controls-height: 1.5rem;
 @primary-radius: 0.5rem;
 @secondary-radius: 0.2rem;
@@ -13,6 +13,7 @@
 }
 
 .TodoList {
+  .shadowed;
   background-color: @primary-color;
   width: 50%;
   margin: 1rem auto;
@@ -21,6 +22,7 @@
 }
 
 .TodoItem {
+  .shadowed;
   background-color: @secondary-color;
   min-height: 3rem;
   margin-bottom: 0.5rem;
@@ -46,6 +48,7 @@
 }
 
 .TodoEditModal {
+  .shadowed;
   position: absolute;
   top: 2rem;
   left: 0;
@@ -55,8 +58,7 @@
   width: 20%;
   background-color: @primary-color;
   border-radius: @primary-radius;
-  border: 1px @secondary-color solid;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,0.5);
+  border: 1px @secondary-color solid;  
 }
 
 .TodoEditBtn {
@@ -96,17 +98,20 @@
   justify-content: space-between;
 }
 
-button {
+.styled-button {
   cursor: pointer;
   height: @controls-height;
   width: 3rem;
   margin: 0.2rem;
   color: @primary-color;
+  box-shadow: 0 2px 0 rgb(5 145 255 / 10%);
+  border: 1px solid transparent;
   border-radius: @secondary-radius;
 }
 
 button.delete,
 button.close {
+  .styled-button;
   background-color: @color-red;
   width: 1.5rem;
   border-radius: 50%;
@@ -115,12 +120,15 @@ button.close {
 button.edit,
 button.add,
 button.save {
-  background-color: @color-green;
+  .styled-button;
+  background-color: @color-blue;
 }
-
-
 
 .checkbox {
   width: 1.5rem;
   height: @controls-height;
+}
+
+.shadowed { 
+ box-shadow: 0 .5rem 1rem rgba(0,0,0,0.5);
 }

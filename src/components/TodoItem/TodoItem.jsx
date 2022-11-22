@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import React, { useMemo } from 'react'
 
 const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
-    const { id, title, description, endDate, completed, attachment } = todo
+    const { title, description, endDate, completed, attachment } = todo
 
     const isExpired = useMemo(() => {
         const date = dayjs(endDate)
@@ -15,12 +15,16 @@ const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
         }
     }, [endDate])
 
-    const handleDelete = (id) => {
-        onDelete(id)
+    const handleDelete = (todo) => {
+        onDelete(todo)
     }
 
     const handleEdit = (todo) => {
         onEdit(todo)
+    }
+
+    const handleComplete = (id) => {
+        onComplete(id)
     }
 
     return (
@@ -33,14 +37,14 @@ const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
                 <div className={`TodoItemEndDate${isExpired ? ' expired' : ''}`}>
                     {endDate}
                 </div>
-                <div className='TodoItemAttachment'>{attachment?.name}</div>
+                {attachment && <div className='TodoItemAttachment'>
+                    <a href={attachment}>show file</a>
+                </div>}
             </div>
-
-
             <div className='TodoItemControl'>
-                <input type='checkbox' className='checkbox' checked={completed} onChange={() => onComplete(id)} />
+                <input type='checkbox' className='checkbox' checked={completed} onChange={() => handleComplete(todo)} />
                 <button className='button edit' onClick={() => handleEdit(todo)}>edit</button>
-                <button className='button delete' onClick={() => handleDelete(id)}>x</button>
+                <button className='button delete' onClick={() => handleDelete(todo)}>x</button>
             </div>
         </li>
     )

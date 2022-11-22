@@ -1,57 +1,48 @@
 import React, { useEffect, useState } from 'react'
-import TodoEditModal from '../components/TodoEditModal/TodoEditModal';
+import TodoEditModal from '../components/TodoEditModal/TodoEditModal'
 import TodoList from '../components/TodoList/TodoList'
-import { deleteTodoItem, getTodoList, saveTodoItem, updateTodoList } from '../service/database';
+import { deleteTodoItem, getTodoList, saveTodoItem } from '../service/database'
 
 const TodoContainer = (props) => {
-
   const [todos, setTodos] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingTodo, setEditingTodo] = useState(null)
 
-  const loadTodoList = () => {
-    const todoList = getTodoList()
-    console.log('todoList', todoList)
+  const loadTodoList = async () => {
+    const todoList = await getTodoList()
     setTodos(todoList)
   }
 
   useEffect(() => {
     loadTodoList()
-  }, []);
-
-  const handleDelete = (id) => {
-    deleteTodoItem(id)
-    loadTodoList()
-  }
+  }, [])
 
   const handleEdit = (todo) => {
     setEditingTodo(todo)
     setIsModalOpen(true)
   }
 
-  const handleComplete = (id) => {
-    const todoList = todos.map(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed
-      }
-      return todo
-    })
-    setTodos(todoList)
-    updateTodoList(todos)
+  const handleComplete = async (item) => {
+    item.completed = !item.completed
+    await saveTodoItem(item)
+    loadTodoList()
   }
 
-  const handleOpenModal = () => {
+  const handleToggleModal = () => {
     setEditingTodo(null)
     setIsModalOpen(!isModalOpen)
   }
 
-  const handleEditModal = (item) => {
-    
-    console.log('item', item)
-    saveTodoItem(item)
-     loadTodoList()
+  const handleEditModal = async (item) => {
+    await saveTodoItem(item)
+    loadTodoList()
     setEditingTodo(null)
     setIsModalOpen(false)
+  }
+
+  const handleDelete = (id) => {
+    deleteTodoItem(id)
+    loadTodoList()
   }
 
   return (
@@ -61,12 +52,12 @@ const TodoContainer = (props) => {
         onDelete={handleDelete}
         onEdit={handleEdit}
         onComplete={handleComplete}
-        onAddClick={handleOpenModal}
+        onAddClick={handleToggleModal}
         isModalOpen={isModalOpen}
       />
       {isModalOpen && <TodoEditModal
         onFormSubmit={handleEditModal}
-        onCloseClick={handleOpenModal}
+        onCloseClick={handleToggleModal}
         todo={editingTodo}
       />}
     </>
