@@ -12,7 +12,7 @@ import React, { useMemo } from 'react'
  * @returns TodoItem - UI component for displaying data for each task
  */
 const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
-    const { title, description, endDate, completed, attachment } = todo
+    const { title, description, endDate, completed, attachmentUrl } = todo
 
     const isExpired = useMemo(() => {
         const date = dayjs(endDate)
@@ -45,10 +45,10 @@ const TodoItem = ({ todo, onDelete, onComplete, onEdit }) => {
                     <div>{description}</div>
                 </div>
                 <div className={`TodoItemEndDate${isExpired ? ' expired' : ''}`}>
-                    {endDate}
+                    {endDate}   
                 </div>
-                {attachment && <div className='TodoItemAttachment'>
-                    <a href={attachment}>show file</a>
+                {attachmentUrl && <div className='TodoItemAttachment'>
+                    <a href={attachmentUrl}>attachment</a>
                 </div>}
             </div>
             <div className='TodoItemControl'>

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { loadFile } from '../../service/database'
+import React, { useEffect, useState } from 'react'
 
 /**
  * Component for rendering a form that creates new tasks 
@@ -18,7 +17,8 @@ const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
         description: '',
         endDate: '',
         completed: false,
-        attachment: null
+        file: null,
+        attachmentUrl: ''
     })
 
     useEffect(() => {
@@ -28,17 +28,15 @@ const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const fileRef = useRef()
-
     const handleFieldChange = (e) => {
         const newTodo = { ...value }
         newTodo[e.target.name] = e.target.value
         setValue(newTodo)
     }
 
-    const handleAttachmentChange = async (e) => {
-        const fileUrl = await loadFile(e.target.files[0])
-        const newTodo = { ...value, attachment: fileUrl }
+    const handleAttachmentChange = (e) => {
+        const file = e.target.files[0]
+        const newTodo = { ...value, file }
         setValue(newTodo)
     }
 
@@ -76,11 +74,13 @@ const TodoEditModal = ({ onFormSubmit, onCloseClick, todo }) => {
                     value={value.endDate} />
 
                 <label htmlFor="attachment">File</label>
-                <input type="file"
-                    name='attachment'
-                    onChange={handleAttachmentChange}
-                    ref={fileRef} />
-
+                {!value.attachmentUrl &&
+                    <input type="file"
+                        name='attachment'
+                        onChange={handleAttachmentChange}
+                    />}
+                {value.attachmentUrl &&
+                    <a href={value.attachmentUrl}>attachment</a>}
                 <button type='submit' className='save'>save</button>
             </form>
         </div>

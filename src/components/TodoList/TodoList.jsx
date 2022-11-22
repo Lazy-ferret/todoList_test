@@ -6,11 +6,14 @@ import TodoItem from '../TodoItem/TodoItem'
  * TodoItem for each item in the array
  *  
  * @prop {function} onFormSubmit - submit form handler 
- * @prop {function} onCloseClick - close button handler 
- * @prop {Object} todo - data of editing TodoItem
+ * @prop {Array} todos - array of objects of todo items data
+ * @prop {string} listTitle - list title
+ * @prop {function} onDelete - delete todo item handler 
+ * @prop {function} onComplete - todo item property 'completed' handler
+ * @prop {function} onEdit - submit form handler
  * @returns TodoItem - UI component for displaying data for each task
  */
-const TodoList = ({ todos, listTitle, onDelete, onComplete, onAddClick, isModalOpen, onEdit }) => {
+const TodoList = ({ todos, listTitle, onDelete, onComplete, onEdit }) => {
 
     const memoList = useMemo(() => {
         return todos.map(todo => {
@@ -20,7 +23,6 @@ const TodoList = ({ todos, listTitle, onDelete, onComplete, onAddClick, isModalO
                 onDelete={onDelete}
                 onEdit={onEdit}
                 onComplete={onComplete}
-                onAddClick={onAddClick}
             />
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +37,6 @@ const TodoList = ({ todos, listTitle, onDelete, onComplete, onAddClick, isModalO
                     : <span>ToDo List is empty</span>
                 }
             </ul>
-            {!isModalOpen && <button className='add' onClick={onAddClick}>add</button>}
         </div>
     )
 }

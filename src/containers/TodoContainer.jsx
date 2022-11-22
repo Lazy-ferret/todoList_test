@@ -35,12 +35,12 @@ const TodoContainer = () => {
   }
 
   const handleAddClick = () => {
-    setIsModalOpen(!isModalOpen)
+    setIsModalOpen(true)
   }
 
   const handleCloseClick = () => {
     setEditingTodo(null)
-    setIsModalOpen(!isModalOpen)
+    setIsModalOpen(false)
   }
 
   const handleSubmitModal = async (item) => {
@@ -56,7 +56,8 @@ const TodoContainer = () => {
   }
 
   return (
-    <>
+    <div className='TodoContainer'>
+      {!isModalOpen && <button className='add' onClick={handleAddClick}>add</button>}
       <TodoList todos={todos}
         listTitle='Todo List'
         onDelete={handleDelete}
@@ -70,7 +71,7 @@ const TodoContainer = () => {
         onCloseClick={handleCloseClick}
         todo={editingTodo}
       />}
-    </>
+    </div>
   )
 }
 

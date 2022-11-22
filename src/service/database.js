@@ -32,12 +32,18 @@ export const getTodoList = async () => {
  * @param {Object} item - todo item data
  */
 export const saveTodoItem = async (item) => {
-    const { id, ...rest } = item
+    const { id, file, ...rest } = item
+    let attachmentUrl = ''
+    if (file) {
+        attachmentUrl = await loadFile(file)
+    } else if (item.attachmentUrl) {
+        attachmentUrl = item.attachmentUrl
+    }
     try {
         if (id) {
-            await setDoc(doc(db, "todos", id), rest)
+            await setDoc(doc(db, "todos", id), { ...rest, attachmentUrl })
         } else {
-            await addDoc(collection(db, "todos"), rest)
+            await addDoc(collection(db, "todos"), { ...rest, attachmentUrl })
         }
     } catch (e) {
         console.error(e)
@@ -55,9 +61,9 @@ export const saveTodoItem = async (item) => {
 export const deleteTodoItem = async (item) => {
     try {
         await deleteDoc(doc(db, 'todos', item.id))
-        if (item.attachment) {
+        if (item.attachmentUrl) {
             const storage = getStorage()
-            const desertRef = ref(storage, item.attachment)
+            const desertRef = ref(storage, item.attachmentUrl)
             await deleteObject(desertRef)
         }
     } catch (e) {
